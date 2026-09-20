@@ -1,0 +1,24 @@
+# Biên dịch bytecode
+out/
+bin/
+*.class
+
+# File tạm hệ điều hành và Office
+.DS_Store
+Thumbs.db
+~$*.docx
+.~*.docx
+
+# Dữ liệu tạm sinh ra khi chạy test Socket
+lab4/uploads/
+lab4/data/
+baocao.txt
+*.log
+
+# Cấu hình IDE cá nhân
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath

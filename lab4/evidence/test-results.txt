@@ -1,0 +1,59 @@
+==========================================================================
+BÁO CÁO KẾT QUẢ KIỂM THỬ THỰC HÀNH LAB 4 - SOCKET TCP VÀ UDP (IUH)
+Thời gian thực hiện: 2026-09-20T13:26:59.455420
+==========================================================================
+
+>>> 1. KIỂM THỬ BÀI 1: HOST VÀ URI INSPECTOR
+[Ca 1: localhost] -> Loopback: true, nhận diện được IPv4 (127.0.0.1) và IPv6 (::1)
+[Ca 2: example.com] -> Phân giải được IP công cộng (Public Internet)
+[Ca 3: host-khong-ton-tai.invalid] -> Bắt ngoại lệ UnknownHostException chuẩn xác, không crash.
+[Ca 4: URI hợp lệ] https://fit.iuh.edu.vn:8443/courses?dept=cntt#syllabus
+       -> Scheme: https, Host: fit.iuh.edu.vn, Port: 8443, Path: /courses, Query: dept=cntt, Fragment: syllabus
+       -> KẾT QUẢ: ĐẠT [PASS]
+
+>>> 2. KIỂM THỬ MỤC 4.2 & 4.3: GIAO THỨC DÒNG TCP (PING, TIME, UPPER, QUIT)
+  Client: PING ---> Server: OK PONG
+  Client: TIME ---> Server: OK 2026-09-20T13:26:59.465843
+  Client: UPPER xin chào các bạn ---> Server: OK XIN CHÀO CÁC BẠN
+  Client: UNKNOWN_CMD ---> Server: ERR UNKNOWN_COMMAND
+  Client: QUIT ---> Server: OK BYE
+  -> Phục vụ đa luồng: MultiClientTcpServer dùng FixedThreadPool(20) an toàn tài nguyên.
+  -> KẾT QUẢ: ĐẠT [PASS]
+
+>>> 3. KIỂM THỬ BÀI 2: ĐỔI CHỮ SỐ THÀNH CHỮ TIẾNG VIỆT (DIGIT CONVERTER)
+  Input: ["0"] ---> Output: Không
+  Input: ["5"] ---> Output: Năm
+  Input: ["9"] ---> Output: Chín
+  Input: [""] ---> Output: ERR INVALID_DIGIT
+  Input: ["10"] ---> Output: ERR INVALID_DIGIT
+  Input: ["a"] ---> Output: ERR INVALID_DIGIT
+  Input: [" 5 "] ---> Output: ERR INVALID_DIGIT
+  Input: ["@"] ---> Output: ERR INVALID_DIGIT
+  -> Các ca biên (rỗng, số 2 chữ số, chữ cái, khoảng trắng) đều trả đúng ERR INVALID_DIGIT.
+  -> KẾT QUẢ: ĐẠT [PASS]
+
+>>> 4. KIỂM THỬ BÀI 4: MÁY TÍNH TỪ XA (REMOTE CALCULATOR)
+  Request: CALC + 100 200 ---> Response: OK 300
+  Request: CALC - 50 15 ---> Response: OK 35
+  Request: CALC * 12 8 ---> Response: OK 96
+  Request: CALC / 10 2 ---> Response: OK 5
+  Request: CALC / 10 0 ---> Response: ERR DIVIDE_BY_ZERO
+  Request: CALC % 10 3 ---> Response: ERR UNSUPPORTED_OPERATOR
+  Request: CALC + a 2 ---> Response: ERR INVALID_NUMBER
+  Request: CALC + 10 ---> Response: ERR INVALID_FORMAT
+  -> Bắt đầy đủ lỗi: DIVIDE_BY_ZERO, UNSUPPORTED_OPERATOR, INVALID_NUMBER, INVALID_FORMAT.
+  -> KẾT QUẢ: ĐẠT [PASS]
+
+==========================================================================
+CÂU HỎI VẤN ĐÁP LÝ THUYẾT SINH VIÊN CẦN NẮM RÕ
+==========================================================================
+1. Phân biệt Loopback và Site Local:
+   - Loopback (127.0.0.1 hoặc ::1): Địa chỉ máy cục bộ, gói tin không bao giờ đi ra card mạng vật lý.
+   - Site Local: Địa chỉ IP riêng trong mạng nội bộ LAN (192.168.x.x, 10.x.x.x, 172.16-31.x.x), không định tuyến trực tiếp trên Internet.
+2. Vì sao dùng FixedThreadPool thay vì new Thread() không giới hạn?
+   - Khi có hàng ngàn client kết nối ồ ạt, việc tạo thread không kiểm soát sẽ gây tràn RAM (OutOfMemoryError) và làm sập server. Thread Pool giới hạn số luồng hoạt động cùng lúc, các tác vụ dư sẽ xếp hàng đợi.
+3. Vì sao UDP phải thiết lập setSoTimeout?
+   - Vì UDP không có cơ chế bắt tay và xác nhận ACK. Nếu server chưa mở hoặc gói tin bị thất lạc, hàm receive() sẽ treo vô hạn (blocking) nếu không có timeout.
+4. Giao thức dòng UTF-8 giải quyết vấn đề gì?
+   - TCP là luồng byte liên tục không có biên giới thông điệp. Việc quy ước mỗi thông điệp kết thúc bằng '\n' và mã hóa UTF-8 giúp bảo toàn tiếng Việt và đồng bộ định dạng giữa các máy tính khác nhau.
+==========================================================================
