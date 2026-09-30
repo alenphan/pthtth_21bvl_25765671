@@ -1,0 +1,43 @@
+Anh/chị hãy xây dựng ứng dụng client/server thực hiện hiện các công việc được mô tả
+dưới đây, sử dụng socket TCP với Java
+
+Mô tả Điểm Điểm đạt
+được
+
+Câu 1 (CLO1):
+Server tạo socket tại port 7000 và chờ yêu cầu kết nối từ client.
+Server sử dụng luồng (thread) để quản lý kết nối và các yêu cầu từ
+client(s).
+
+1.0
+1.0
+
+Câu 2 (CLO1):
+Client gởi yêu cầu và kết nối tới server qua IP và port cho trước. 1.0
+Câu 3:
+STT CHẴN LÀM DỊCH VỤ CHẴN (2,4) ; STT LẺ LÀM DỊCH VỤ LẺ (1,3)
+Sau khi chấp nhận kết nối từ client, server sẽ gởi danh sách các dịch
+vụ cung cấp tới client, bao gồm:
+
+0.5
+
+- Dịch vụ 1: Đảo ngược toàn bộ chuỗi và in hoa ký tự đầu của từng
+từ ( PHAT TRIEN HE THONG TICH HOP à Poh Hcit Gnoht
+Eh Neirt Tahp )
+- Dịch vụ 2: Đảo ngược từ và in hoa ký tự đầu của từng từ, giữ
+nguyên vị trí (PHAT TRIEN HE THONG TICH HOP à Tahp
+Neirt Eh Gnoht Hcit Poh)
+- Dịch vụ 3: Đếm số lượng từ của tất cả các dòng gởi đến
+- Dịch vụ 4: Đếm số lượng từ từng dòng
+
+1.5
+1.5
+
+Client chọn dịch vụ, sau đó gởi các dòng chuỗi đến server, quá trình
+nhập liệu và gởi đến server dừng lại khi server nhận được dấu “.” 1.0
+Câu 4:
+Server xử lý yêu cầu và gởi trả kết quả thành công đến client(s) 1.0
+Câu 5: (Chỉ chấm điểm khi server gởi danh sách dịch vụ thành công)
+Client đóng kết nối bằng cách gởi chuỗi “EXIT.” đến server
+Lưu ý: Nếu client-server không duy trì kết nối đến khi thực hiện việc
+gởi chuỗi “EXIT.”, điểm đạt được tối đa: 1.0
