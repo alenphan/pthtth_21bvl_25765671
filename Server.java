@@ -1,10 +1,6 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -34,7 +30,7 @@ public class Server {
     private void start() throws IOException {
         try (ServerSocket server = new ServerSocket(port)) {
             System.out.println("Chat server đang chạy tại cổng " + port + ". Nhấn Ctrl+C để dừng.");
-            while (true) clientPool.execute(new ClientThread(server.accept(), this));
+        while (true) clientPool.execute(new ClientThread(server.accept(), this));
         }
     }
 
