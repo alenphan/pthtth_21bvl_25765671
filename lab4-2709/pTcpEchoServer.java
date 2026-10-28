@@ -3,8 +3,7 @@ import java.net.Socket;
 
 public class pTcpEchoServer {
     public static void main(String[] args) {
-        try {
-            ServerSocket ss = new ServerSocket(6789); //bind(); listen();
+        try (ServerSocket ss = new ServerSocket(6789)) { //bind(); listen();
             System.out.println("SERVER DANG SONG da duoc tao");
             while (true) {
                 Socket s = ss.accept();
@@ -14,8 +13,8 @@ public class pTcpEchoServer {
 
                 // s.close();
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (java.io.IOException e) {
+            System.err.println("TCP server error: " + e.getMessage());
         }
     }
 }

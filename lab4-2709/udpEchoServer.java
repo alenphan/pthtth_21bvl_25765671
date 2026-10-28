@@ -4,8 +4,7 @@ import java.net.DatagramSocket;
 
 class udpEchoServer {
     public static void main(String[] args) {
-        try {
-            DatagramSocket ds = new DatagramSocket(6789);
+        try (DatagramSocket ds = new DatagramSocket(6789)) {
             System.out.println("UDP SERVER da duoc tao");
             while (true) {
                 for (int i=0; i<10; i++) {
@@ -29,7 +28,7 @@ class udpEchoServer {
             }
         }
         catch(IOException e){
-            System.out.println(e);
+            System.err.println("UDP server error: " + e.getMessage());
         }
     }
 }
