@@ -3,17 +3,20 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 
 public class tcpEchoClient {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         //socket = new Socket("localhost", 6789); // "127.0.0.x"
-        try {
-            Socket socket = new Socket(args[0], Integer.parseInt(args[1]));
+        if (args.length < 2) {
+            System.err.println("Usage: java tcpEchoClient <host> <port>");
+            return;
+        }
+        try (Socket socket = new Socket(args[0], Integer.parseInt(args[1]));
+             DataInputStream dis = new DataInputStream(socket.getInputStream());
+             DataOutputStream dos = new DataOutputStream(socket.getOutputStream())) {
 
             System.out.println("CLIENT da duoc tao");
 
-            DataInputStream dis = new DataInputStream(socket.getInputStream());
-            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-
             String clientName = dis.readUTF();
+            System.out.println("Connected to: " + clientName);
             dos.flush();
 
             for (char i = '0'; i <= '9'; i++) {
@@ -26,11 +29,8 @@ public class tcpEchoClient {
                 Thread.sleep(2000);
             }
 
-            if (socket != null) {
-                socket.close();
-            }
         } catch (Exception e) {
-            System.out.println(e);
+            System.err.println("TCP client error: " + e.getMessage());
         }
     }
 }

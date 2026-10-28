@@ -1,4 +1,4 @@
-package lab6.bai03;
+package bai03;
 
 import java.rmi.registry.LocateRegistry;
 import java.util.Scanner;

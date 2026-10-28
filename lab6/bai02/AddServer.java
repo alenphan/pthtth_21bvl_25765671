@@ -1,4 +1,4 @@
-package lab6.bai02;
+package bai02;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;

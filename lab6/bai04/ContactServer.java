@@ -1,4 +1,4 @@
-package lab6.bai04;
+package bai04;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

@@ -1,29 +1,17 @@
-package bai_2;
-
 import java.io.InputStream;
 
 public class InStream2 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		InputStream is = System.in;
 		try {
 			while (true) {
-				if (is.available() > 0) {
-					byte[] buffer = new byte[is.available()];
-					int bytesRead = is.read(buffer);
-					if (bytesRead == -1) {
-						break;
-					}
-					String str = new String(buffer, 0, bytesRead);
-					System.out.println(str);
-				} else {
-					System.out.println('.');
-					Thread.sleep(100);
-				}
+				int value = is.read();
+				if (value == -1 || value == 'q') break;
+				System.out.println((char) value);
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (java.io.IOException e) {
+			System.err.println("Khong the doc du lieu tu stdin: " + e.getMessage());
 		}
 	}
 

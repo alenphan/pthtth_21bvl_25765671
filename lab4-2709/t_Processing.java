@@ -10,9 +10,9 @@ public class t_Processing extends Thread {
     }
 
     public void run() {
-        try {
-            DataInputStream dis = new DataInputStream(socket.getInputStream());
-            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+        try (Socket client = socket;
+             DataInputStream dis = new DataInputStream(client.getInputStream());
+             DataOutputStream dos = new DataOutputStream(client.getOutputStream())) {
 
             dos.writeUTF("clientName");
             dos.flush();
@@ -24,14 +24,15 @@ public class t_Processing extends Thread {
                 int ch = dis.readUnsignedByte();
                 System.out.println("Server phan hoi: " + (char) ch);
 
-                Thread.sleep(2000);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
             }
-
-            if (socket != null) {
-                socket.close();
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (java.io.IOException e) {
+            System.err.println("TCP connection error: " + e.getMessage());
         }
     }
 }

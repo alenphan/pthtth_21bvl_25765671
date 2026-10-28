@@ -1,4 +1,4 @@
-package lab6.bai02;
+package bai02;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

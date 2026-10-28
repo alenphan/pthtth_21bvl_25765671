@@ -1,5 +1,3 @@
-package bai_2;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,7 +6,6 @@ import java.io.InputStreamReader;
 public class InStream3 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		InputStream is = System.in;
 		InputStreamReader isr = new InputStreamReader(is);
 		BufferedReader br = new BufferedReader(isr);
@@ -18,8 +15,8 @@ public class InStream3 {
 				if (line == null) break;
 				System.out.println(line);
 			} catch (IOException e) {
-				// TODO: handle exception
 				System.err.println(e);
+				break;
 			}
 		}
 	}

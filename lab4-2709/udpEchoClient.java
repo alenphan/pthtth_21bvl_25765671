@@ -8,8 +8,7 @@ public class udpEchoClient {
 
     public static void main(String[] args) throws InterruptedException {
 
-        try {
-            DatagramSocket ds = new DatagramSocket();
+        try (DatagramSocket ds = new DatagramSocket()) {
             InetAddress serverIP = InetAddress.getByName("localhost");
 
             System.out.println("UDP CLIENT da duoc tao");
@@ -33,7 +32,7 @@ public class udpEchoClient {
             System.out.println("Client da goi du 0-9 va nhan du phan hoi");
 
         } catch (IOException e) {
-            System.out.println(e);
+            System.err.println("UDP client error: " + e.getMessage());
         }
     }
 }
